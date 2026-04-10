@@ -5,7 +5,7 @@ const KnowledgeTech = {
             <div class="page-header">
                 <div>
                     <h1 class="page-title">技术库</h1>
-                    <p class="page-desc">整合所有技术规范、标准图集及材料数据库，构建标准化知识底座</p>
+                    <p class="page-desc">整合所有技术规范与标准图集，构建标准化知识底座</p>
                 </div>
             </div>
 
@@ -144,98 +144,18 @@ const KnowledgeTech = {
                 </div>
             </div>
 
-            <!-- Tab 3: 材料数据库 -->
-            <div v-show="activeTab === 2">
-                <div class="toolbar">
-                    <div class="toolbar-left">
-                        <input class="form-input" type="text" placeholder="搜索材料名称..." style="min-width: 260px;">
-                    </div>
-                </div>
-                <div class="feature-grid">
-                    <div class="feature-item" v-for="cat in materialCategories" :key="cat.name" style="cursor: pointer; padding: 24px;" @click="handleCategoryClick(cat)">
-                        <div :class="['feature-item-icon']" :style="{ background: cat.bg, color: cat.color }" v-html="cat.icon"></div>
-                        <div>
-                            <h4>{{ cat.name }}</h4>
-                            <p>{{ cat.desc }}</p>
-                            <p style="margin-top: 4px; color: var(--primary); font-weight: 500; font-size: 12px;">共 {{ cat.count }} 项</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tab 4: 智能检索 -->
-            <div v-show="activeTab === 3">
-                <div class="card" style="margin-bottom: 24px;">
-                    <div class="card-body" style="padding: 40px 24px; text-align: center;">
-                        <div style="font-size: 48px; margin-bottom: 16px;">&#128270;</div>
-                        <h3 style="font-size: 18px; font-weight: 600; color: var(--gray-800); margin-bottom: 8px;">智能知识检索</h3>
-                        <p style="font-size: 13px; color: var(--gray-500); margin-bottom: 24px;">基于AI技术，为您快速定位规范条文、标准要求及技术参数</p>
-                        <div style="max-width: 640px; margin: 0 auto; position: relative;">
-                            <input class="form-input" type="text" v-model="aiQuery"
-                                   placeholder="请输入问题，如：市政道路沥青面层厚度要求"
-                                   style="height: 48px; font-size: 15px; padding: 0 120px 0 20px; border-radius: 24px; border: 2px solid var(--gray-300);"
-                                   @keyup.enter="handleSearch">
-                            <button class="btn btn-primary" @click="handleSearch"
-                                    style="position: absolute; right: 4px; top: 4px; height: 40px; border-radius: 20px; padding: 0 20px;">
-                                搜索
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Search Results -->
-                <div v-if="searchResults.length > 0">
-                    <h3 style="font-size: 15px; font-weight: 600; color: var(--gray-800); margin-bottom: 16px;">检索结果</h3>
-                    <div class="card" v-for="(result, index) in searchResults" :key="index" style="margin-bottom: 12px; cursor: pointer;" @click="handleView(result)">
-                        <div class="card-body">
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                                <span class="tag tag-blue">Q</span>
-                                <span style="font-size: 14px; font-weight: 600; color: var(--gray-800);">{{ result.question }}</span>
-                            </div>
-                            <div style="display: flex; align-items: flex-start; gap: 8px;">
-                                <span class="tag tag-green">A</span>
-                                <p style="font-size: 13px; color: var(--gray-600); line-height: 1.8;">{{ result.answer }}</p>
-                            </div>
-                            <div style="margin-top: 8px; font-size: 12px; color: var(--gray-400);">
-                                来源：{{ result.source }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Default Q&A samples -->
-                <div v-else>
-                    <h3 style="font-size: 15px; font-weight: 600; color: var(--gray-800); margin-bottom: 16px;">热门检索</h3>
-                    <div class="card" v-for="(result, index) in sampleQA" :key="index" style="margin-bottom: 12px; cursor: pointer;" @click="handleView(result)">
-                        <div class="card-body">
-                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                                <span class="tag tag-blue">Q</span>
-                                <span style="font-size: 14px; font-weight: 600; color: var(--gray-800);">{{ result.question }}</span>
-                            </div>
-                            <div style="display: flex; align-items: flex-start; gap: 8px;">
-                                <span class="tag tag-green">A</span>
-                                <p style="font-size: 13px; color: var(--gray-600); line-height: 1.8;">{{ result.answer }}</p>
-                            </div>
-                            <div style="margin-top: 8px; font-size: 12px; color: var(--gray-400);">
-                                来源：{{ result.source }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     `,
     data() {
         return {
             activeTab: 0,
-            tabs: ['规范标准', '标准图集', '材料数据库', '智能检索'],
+            tabs: ['规范标准', '标准图集'],
             currentPage: 1,
             filterLevel: '',
             filterMajor: '',
             filterStatus: '',
             searchText: '',
             atlasSearch: '',
-            aiQuery: '',
             standards: [
                 { id: 1, code: 'GB 50220-95', name: '城市道路交通规划设计规范', level: '国标', status: '现行', major: '道路', date: '1995-09-01' },
                 { id: 2, code: 'CJJ 1-2008', name: '城镇道路工程技术标准', level: '行标', status: '现行', major: '道路', date: '2008-09-01' },
@@ -254,32 +174,6 @@ const KnowledgeTech = {
                 { id: 5, code: 'MB1', name: '市政桥梁标准图集', major: '桥梁', version: '2020版', sheets: 256 },
                 { id: 6, code: 'MR3', name: '道路交叉口设计图集', major: '道路', version: '2018版', sheets: 142 }
             ],
-            materialCategories: [
-                { name: '沥青材料', desc: '道路沥青、改性沥青、乳化沥青等各类沥青材料的性能参数与规格', icon: '&#128738;', count: 256, bg: 'var(--gray-100)', color: 'var(--gray-700)' },
-                { name: '混凝土材料', desc: '普通混凝土、钢筋混凝土、预应力混凝土等配合比及性能指标', icon: '&#9632;', count: 389, bg: 'var(--primary-bg)', color: 'var(--primary)' },
-                { name: '管材管件', desc: '给排水管道、燃气管道、电力管道等管材规格与技术参数', icon: '&#9679;', count: 178, bg: 'var(--info-bg)', color: 'var(--info)' },
-                { name: '路基材料', desc: '路基填料、基层材料、垫层材料等路基工程材料参数', icon: '&#9650;', count: 145, bg: 'var(--success-bg)', color: 'var(--success)' },
-                { name: '照明器材', desc: '路灯、隧道灯、景观灯等照明灯具的技术参数与选型指南', icon: '&#128161;', count: 203, bg: 'var(--warning-bg)', color: 'var(--warning)' },
-                { name: '交通安全设施', desc: '护栏、标志标线、信号灯等交通安全设施标准与规格', icon: '&#9888;', count: 167, bg: 'var(--danger-bg)', color: 'var(--danger)' }
-            ],
-            sampleQA: [
-                {
-                    question: '市政道路沥青面层厚度要求是什么？',
-                    answer: '根据CJJ 37-2012《城市道路工程设计规范》，快速路沥青面层厚度不宜小于70mm，主干路不宜小于60mm，次干路不宜小于50mm，支路不宜小于30mm。对于重交通路段，沥青面层厚度应适当增加。',
-                    source: 'CJJ 37-2012 第12.3.2条'
-                },
-                {
-                    question: '城市排水管道最小覆土深度要求？',
-                    answer: '根据GB 50014-2021《室外排水设计标准》，排水管道的最小覆土深度应根据道路荷载、管材强度、土壤冰冻深度等因素综合确定。车行道下管顶最小覆土深度一般不小于0.7m，非车行道下不小于0.3m。',
-                    source: 'GB 50014-2021 第4.3.7条'
-                },
-                {
-                    question: '城市道路照明标准值要求？',
-                    answer: '根据CJJ 45-2015《城市道路照明设计标准》，快速路平均照度不低于20lx，主干路不低于15lx，次干路不低于10lx，支路不低于8lx。交会区照明标准应高于路段标准，平均照度不低于30lx。',
-                    source: 'CJJ 45-2015 第3.3节'
-                }
-            ],
-            searchResults: []
         };
     },
     computed: {
@@ -312,23 +206,11 @@ const KnowledgeTech = {
             alert('打开新增规范对话框');
         },
         handleView(item) {
-            alert('查看详情：' + (item.code || item.question));
+            alert('查看详情：' + item.code);
         },
         handleDownload(item) {
             alert('下载文件：' + item.code);
         },
-        handleSearch() {
-            if (this.aiQuery.trim()) {
-                this.searchResults = this.sampleQA.filter(qa =>
-                    qa.question.includes(this.aiQuery) || qa.answer.includes(this.aiQuery)
-                );
-            } else {
-                this.searchResults = [];
-            }
-        },
-        handleCategoryClick(cat) {
-            alert('进入材料分类：' + cat.name);
-        }
     }
 };
 

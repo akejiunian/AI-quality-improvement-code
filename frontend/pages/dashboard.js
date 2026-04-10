@@ -106,7 +106,7 @@ const Dashboard = {
                     icon: '&#128218;',
                     color: 'blue',
                     to: '/knowledge/tech',
-                    tags: ['规范标准', '标准图集', '材料数据']
+                    tags: ['规范标准', '标准图集']
                 },
                 {
                     title: '校审库',

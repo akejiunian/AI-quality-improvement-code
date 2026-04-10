@@ -5,7 +5,7 @@ const KnowledgeReview = {
             <div class="page-header">
                 <div>
                     <h1 class="page-title">校审库</h1>
-                    <p class="page-desc">建立校审要点清单与常见错误案例库，明确质量红线与标准</p>
+                    <p class="page-desc">建立校审要点清单与常见典型案例库，明确质量红线与标准</p>
                 </div>
             </div>
 
@@ -86,7 +86,7 @@ const KnowledgeReview = {
                 </div>
             </div>
 
-            <!-- Tab 2: 错误案例 -->
+            <!-- Tab 2: 典型案例 -->
             <div v-show="activeTab === 1">
                 <!-- Filter Bar -->
                 <div class="filter-bar">
@@ -282,7 +282,7 @@ const KnowledgeReview = {
     data() {
         return {
             activeTab: 0,
-            tabs: ['校审要点', '错误案例', '质量红线'],
+            tabs: ['校审要点', '典型案例', '质量红线'],
             expandedNodes: {},
             selectedLeaf: null,
             selectedPoint: null,
